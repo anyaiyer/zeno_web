@@ -1,0 +1,7 @@
+librosa
+matplotlib
+streamlit
+audio-recorder-streamlit
+fastai==2.7.12
+fastcore==1.5.29
+IPython

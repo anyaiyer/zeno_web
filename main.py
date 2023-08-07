@@ -24,7 +24,7 @@ st.markdown(
     f" This is a website for Zeno",
     unsafe_allow_html=True,
 )
-
+st.divider()
 sample_rate = 44_100
 def record_audio():
 
@@ -33,7 +33,7 @@ def record_audio():
         recording_color="#e8b62c",
         neutral_color="#6aa36f",
         icon_name="user",
-        icon_size="6x",
+        icon_size="4x",
         energy_threshold=(-1.0, 1.0),
         pause_threshold=10.0, # Number of seconds to record.,
         sample_rate  = sample_rate
@@ -61,24 +61,22 @@ def main():
         st.audio(audio_bytes, format="audio/wav")
         st.markdown("Recorded your audio, pleaes click to process your audio")
         if st.button('Process my Audio'):
-            st.write(f'processed audio')
+            st.write(f'Processing audio')
             # Convert the audio generator to a numpy array
             audio_generator = librosa.stream(io.BytesIO(audio_bytes), block_length=256, frame_length=2048, hop_length=2048)
             audio_array = np.concatenate(list(audio_generator))
             
-            st.write(f'processed audio {type(audio_array)}')
             # Save the numpy array as a WAV file using soundfile
             sf.write("test.wav", audio_array, samplerate=sample_rate)
             
             # Now you can compute the MFCCs using the audio_array
             mfccs = librosa.feature.mfcc(y=audio_array, sr=sample_rate, n_mfcc=40)
             librosa.display.specshow(mfccs, sr=sample_rate, x_axis="time")
-            plt.savefig(f"mfcc.png")
-            
+            plt.savefig(f"mfcc.png")            
             predictor = load_learner("model/zeno_model.pkl")  
             result = predictor.predict(mfccs)
             out = calculate_prob(result)    
-            st.markdown(f"# {out}")
+            st.markdown(f"**Your Result {out}**")
             st.image("mfcc.png")
 
 def test_affected():
@@ -95,6 +93,5 @@ def test_affected():
 if __name__ == "__main__":
     label_func = {}
     main()
-    # test_affected()
 
     
