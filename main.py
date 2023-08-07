@@ -21,7 +21,7 @@ title = "Zeno"
 st.set_page_config(page_title=title, page_icon=":robot:")
 st.header(title)
 st.markdown(
-    f" This is a website for Zeno",
+    f" Perform the voice exam to obtain a diagnosis.",
     unsafe_allow_html=True,
 )
 st.divider()
@@ -29,7 +29,7 @@ sample_rate = 44_100
 def record_audio():
 
     audio_bytes = audio_recorder(
-        text="Click to Record you Audio, say Ah continously for 10 seconds",
+        text="Click to Record you Audio, say 'ahh' continously for 10 seconds",
         recording_color="#e8b62c",
         neutral_color="#6aa36f",
         icon_name="user",
